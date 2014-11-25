@@ -4,7 +4,9 @@
   "description": "https://leanpub.com/purescript/read#leanpub-auto-installing-purescript",
   "main": "Gruntfile.js",
   "dependencies": {
+    "bower": "",
     "grunt": "^0.4.5",
+    "grunt-cli": "",
     "grunt-purescript": "^0.6.0"
   },
     "devDependencies": {"jshint": ""},
