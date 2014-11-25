@@ -1,0 +1,27 @@
+{
+  "name": "learnpurescript",
+  "version": "1.0.0",
+  "homepage": "https://github.com/massemanet/learnpurescript",
+  "authors": [
+    "mats cronqvist <masse@klarna.com>"
+  ],
+  "description": "https://leanpub.com/purescript",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "pure",
+    "script"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "purescript-math": "~0.1.0"
+  }
+}

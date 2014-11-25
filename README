@@ -1,1 +1,1 @@
-npm install && grunt && node dist/Main.js
+npm install && bower update && grunt && node dist/Main.js
