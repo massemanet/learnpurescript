@@ -1,3 +1,7 @@
+PSC=https://github.com/purescript/purescript/releases
+SYS=macos # macos | linus64
+wget -qO - $PSC | grep -Eo "/download/.*/$SYS.tar.gz"
+wget $PSC/download/v0.6.1.2/linux64.tar.gz
 # get tarball from https://github.com/purescript/purescript/releases
 # and unpack
 tar -xzf linux64.tar.gz
