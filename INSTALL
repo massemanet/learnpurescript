@@ -14,7 +14,8 @@ case "$(uname -s)" in
             # package "node" does not install node.js...
             sudo apt-get update && sudo apt-get install --yes nodejs-legacy npm
         elif $(>&/dev/null type yum) ; then
-            sudo yum update && sudo yum install npm
+            # you must have epel - "sudo yum -y install epel-release"
+            sudo yum -y update && sudo yum -y install npm
         else
             usage "I only work with apt and yum"
         fi
@@ -22,7 +23,7 @@ case "$(uname -s)" in
     ("Darwin")
         SYS=macos
         if $(>&/dev/null type brew) ; then
-            brew update && brew install node npm
+            brew update && brew install node
         else
             usage "I only work with brew"
         fi
