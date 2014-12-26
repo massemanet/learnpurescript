@@ -6,18 +6,37 @@ function usage () {
     exit
 }
 
-# find our platform
+# find our platform. install node && npm
 case "$(uname -s)" in
-    ("Linux")  SYS=linux64;;
-    ("Darwin") SYS=macos;;
-    (*) usage "I only work on Linux and Darwin"
+    ("Linux")
+        SYS=linux64
+        if $(>&/dev/null type apt-get) ; then
+            # package "node" does not install node.js...
+            sudo apt-get update && sudo apt-get install --yes nodejs-legacy npm
+        elif $(>&/dev/null type yum) ; then
+            sudo yum update && sudo yum install npm
+        else
+            usage "I only work with apt and yum"
+        fi
+        ;;
+    ("Darwin")
+        SYS=macos
+        if $(>&/dev/null type brew) ; then
+            brew update && brew install node npm
+        else
+            usage "I only work with brew"
+        fi
+        ;;
+    (*)
+        usage "I only work on Linux and Darwin"
 esac
-# find the current purescript tarball and download it
+
+# find the current purescript tarball
 PSC=https://github.com/purescript/purescript/releases
 TRG=$(wget -qO - $PSC | grep -Eo "/download/.*/$SYS.tar.gz"| head -1)
 echo "your system is $SYS. getting purecript vsn $(echo $TRG | cut -f3 -d"/")."
-wget $PSC/$TRG
 # get tarball from https://github.com/purescript/purescript/releases
+wget $PSC/$TRG
 # and unpack
 tar -xzf $SYS.tar.gz
 rm $SYS.tar.gz
@@ -29,4 +48,4 @@ sudo npm install -g grunt-cli bower jshint
 # install the project local stuff from package.json and bower.json
 npm install && bower update
 # build and run Hello World
-grunt && node dist/Main.js
+grunt --gruntfile Gruntfile-happy.js && node dist/Happy.js
