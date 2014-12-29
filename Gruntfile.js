@@ -4,11 +4,10 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
 
-        srcFiles: ["ch*/src/**/*.purs"],
         bowerFiles: ["bower_components/**/src/**/*.purs"],
 
         dotPsci: {
-            src: ["<%=srcFiles%>","<%=bowerFiles%>"]
+            src: ["<%=bowerFiles%>"]
         },
 
         psc: {
@@ -21,7 +20,7 @@ module.exports = function(grunt) {
                 dest: "out/Happy.js"
             },
             ch2: {
-                src: ["ch2/src/Chapter2.purs","<%=bowerFiles%>"],
+                src: ["ch2/src/Chapter2.purs"],
                 dest: "out/Chapter2.js"
             }
         }
