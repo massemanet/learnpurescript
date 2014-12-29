@@ -1,6 +1,7 @@
 \#*
 .\#*
 *~
-/dist/
-/node_modules/
+/.psci*
 /bower_components/
+/node_modules/
+/out/

@@ -49,4 +49,4 @@ sudo npm install -g grunt-cli bower jshint
 # install the project local stuff from package.json and bower.json
 npm install && bower update
 # build and run Hello World
-grunt --gruntfile Gruntfile-happy.js && node dist/Happy.js
+grunt ch0 && node out/Happy.js

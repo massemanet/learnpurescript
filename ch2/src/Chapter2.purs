@@ -1,4 +1,4 @@
-module Chapter2 where
+module Main where
 
 import Debug.Trace
 

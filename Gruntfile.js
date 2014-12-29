@@ -4,21 +4,32 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
 
-        srcFiles: ["src/**/*.purs", "bower_components/**/src/**/*.purs"],
+        srcFiles: ["ch*/src/**/*.purs"],
+        bowerFiles: ["bower_components/**/src/**/*.purs"],
+
+        dotPsci: {
+            src: ["<%=srcFiles%>","<%=bowerFiles%>"]
+        },
 
         psc: {
             options: {
-                main: "Chapter2",
-                modules: ["Chapter2"]
+                modules: ["Main"],
+                main: "Main"
             },
-            all: {
-                src: ["<%=srcFiles%>"],
-                dest: "dist/Main.js"
+            ch0: {
+                src: ["ch0/src/HappyMessage.purs"],
+                dest: "out/Happy.js"
+            },
+            ch2: {
+                src: ["ch2/src/Chapter2.purs","<%=bowerFiles%>"],
+                dest: "out/Chapter2.js"
             }
         }
     });
 
     grunt.loadNpmTasks("grunt-purescript");
 
-    grunt.registerTask("default", ["psc:all"]);
+    grunt.registerTask("default", ["dotPsci"]);
+    grunt.registerTask("ch0", ["psc:ch0"]);
+    grunt.registerTask("ch2", ["psc:ch2"]);
 };

@@ -1,4 +1,4 @@
-module HappyMessage where
+module Main where
 
 import Debug.Trace
 
