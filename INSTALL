@@ -44,9 +44,5 @@ rm $SYS.tar.gz
 # move the psc* binaries to somewhere in the path
 sudo mv purescript/psc* /usr/local/bin
 rm -rf ./purescript
-# install some dependencies globally
-sudo npm install -g grunt-cli bower jshint
-# install the project local stuff from package.json and bower.json
-npm install && bower update
-# build and run Hello World
-grunt ch0 && node out/Happy.js
+# install pulp globally
+npm install -g pulp
