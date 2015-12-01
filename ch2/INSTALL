@@ -1,0 +1,3 @@
+pulp init
+pulp dep install purescript-math --save
+pulp dep install purescript-globals --save
