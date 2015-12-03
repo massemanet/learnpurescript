@@ -1,0 +1,3 @@
+pulp init
+pulp dep install purescript-lists --save
+
