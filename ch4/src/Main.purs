@@ -1,9 +1,12 @@
 module Main where
 
 import Prelude
-import Control.Monad.Eff
-import Control.Monad.Eff.Console
+import Math
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
-main = do
-  log "Hello sailor!"
+even :: Int -> Boolean
+even i =
+   if i == 0     then true
+   else if i < 2 then false
+   else even (i - 2)
+
+
