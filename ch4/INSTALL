@@ -1,0 +1,13 @@
+pulp init
+pulp dep install purescript-maybe --save
+pulp dep install purescript-arrays --save
+pulp dep install purescript-strings --save
+pulp dep install purescript-foldable-traversable --save
+pulp dep install purescript-console --save
+
+#> let address1 = { street: "123 Fake St.", city: "Faketown", zip: "11245" }
+#> let entry1 = { firstName: "John", lastName: "Smith", address: address1 }
+#> let book = insertEntry entry1 emptyBook
+#> showEntry <$> findEntryByName "John" "Smith" book
+#> showEntry <$> findEntryByStreet  "123 Fake St." book
+
