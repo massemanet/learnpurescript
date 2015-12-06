@@ -1,3 +1,9 @@
 pulp init
 pulp dep install purescript-lists --save
 
+#> let address1 = { street: "123 Fake St.", city: "Faketown", zip: "11245" }
+#> let entry1 = { firstName: "John", lastName: "Smith", address: address1 }
+#> let book = insertEntry entry1 emptyBook
+#> showEntry <$> findEntryByName "John" "Smith" book
+#> showEntry <$> findEntryByStreet  "123 Fake St." book
+
