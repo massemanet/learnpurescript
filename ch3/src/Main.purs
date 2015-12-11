@@ -24,24 +24,28 @@ insertEntry :: Entry -> AddressBook -> AddressBook
 insertEntry = Cons
 
 findEntryByName :: String -> String -> AddressBook -> Maybe Entry
-findEntryByName fn ln = filter filterf >>> head
+findEntryByName fn ln =
+  filter filterf >>> head
   where
-  filterf e = e.firstName == fn && e.lastName == ln
+    filterf e = e.firstName == fn && e.lastName == ln
 
 findEntryByStreet :: String -> AddressBook -> Maybe Entry
-findEntryByStreet sn = filter filtersf >>> head
+findEntryByStreet sn =
+  filter filtersf >>> head
   where
-  filtersf e = e.address.street == sn
+    filtersf e = e.address.street == sn
 
 namep :: String -> AddressBook -> Boolean
-namep n = filter filterf >>> Data.List.null >>> not
+namep n =
+  filter filterf >>> Data.List.null >>> not
   where
-  filterf e = e.firstName == n || e.lastName == n
+    filterf e = e.firstName == n || e.lastName == n
 
 removeDuplicates :: AddressBook -> AddressBook
-removeDuplicates = Data.List.nubBy filterf
+removeDuplicates =
+  Data.List.nubBy filterf
   where
-  filterf e1 e2 = e1.firstName == e2.firstName || e1.lastName == e2.lastName
+    filterf e1 e2 = e1.firstName == e2.firstName || e1.lastName == e2.lastName
 
 showEntry :: Entry -> String
 showEntry e =
@@ -50,4 +54,3 @@ showEntry e =
 showAddress :: Address -> String
 showAddress a =
   a.street ++ ", " ++ a.zip ++ " " ++ a.city
-
