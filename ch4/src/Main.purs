@@ -1,7 +1,12 @@
 module Main where
 
 import Prelude
-import Math
+import Data.Array (null,filter,length)
+import Data.Array ((..))
+import Data.Array.Unsafe (head, tail)
+import Control.MonadPlus (guard)
+
+-- 4.4:1
 
 even :: Int -> Boolean
 even i =
@@ -10,9 +15,7 @@ even i =
      if i < 2 then false
      else even (i - 2)
 
-
-import Data.Array (null,filter,length)
-import Data.Array.Unsafe (head, tail)
+-- 4.4:1
 
 evens :: Array Int -> Int
 evens is =
@@ -20,19 +23,29 @@ evens is =
   else if even $ head is then (evens $ tail is) + 1
   else evens $ tail is
 
+-- 4.7:1
+
 squares :: Array Int -> Array Int
 squares is =
   (\n -> n*n) <$> is
+
+-- 4.7:2
 
 nonegs :: Array Int -> Array Int
 nonegs is =
   filter (\n -> 0 <= n) is
 
+-- 4.7:3
+
 (<$?>) :: forall a. (a -> Boolean) -> Array a -> Array a
 (<$?>) = filter
 
-import Data.Array ((..))
-import Control.MonadPlus (guard)
+-- 4.11:1
+
+isPrime :: Int -> Boolean
+isPrime n =
+  (length $ fctors n) == 0
+
 fctors :: Int -> Array (Array Int)
 fctors n = do
   i <- 2 .. n
@@ -40,15 +53,15 @@ fctors n = do
   guard $ i * j == n
   return [i, j]
 
-isPrime :: Int -> Boolean
-isPrime n =
-  (length $ fctors n) == 0
+-- 4.11:2
 
 cartesianprod :: Array Int -> Array Int -> Array (Array Int)
 cartesianprod is js = do
   i <- is
   j <- js
   return [i, j]
+
+-- 4.11:3
 
 triples :: Int -> Array (Array Int)
 triples n = do
@@ -58,20 +71,35 @@ triples n = do
   guard $ i * i + j * j == k * k
   return [i, j, k]
 
-fector :: Int -> Int -> Int
-fector m n =
-  if n <= m then 1
+-- 4.11:4
+
+factorize :: Int -> Array (Array Int)
+factorize i =
+  recurs i i [] (facs i)
+
+recurs :: Int -> Int -> Array Int -> Array Int -> Array (Array Int)
+recurs m n stem factors =
+  if (null factors) then
+    if (prod stem 1) == m then [stem]
+    else []
   else
-    if (mod n m) == 0 then m
-    else fector (m + 1) n
+    dorecurs (head factors) (tail factors) m n stem
 
-fecs :: Int -> Array Int
-fecs n =
-  fectors n 2 []
+dorecurs :: Int -> Array Int -> Int -> Int -> Array Int -> Array (Array Int)
+dorecurs f fs m n stem =
+  (recurs m (div n f) ([f] ++ stem) (facs (div n f))) ++ (recurs m n stem fs)
 
-fectors :: Int -> Int -> Array Int -> Array Int
-fectors n m a =
-  if (f == 1) then a
-  else fectors n (f + 1) (a ++ [f] ++ (fecs ( div n f)))
-  where
-    f = fector m n
+facs :: Int -> Array Int
+facs n =
+  if (n < 2) then []
+  else
+    if (n < 4) then [n]
+    else [n] ++
+         do f <- 2 .. (div n 2)
+            guard $ (mod n f) == 0
+            return f
+
+prod :: (Array Int) -> Int -> Int
+prod is p =
+  if (null is) then p
+  else prod (tail is) ((head is) * p)

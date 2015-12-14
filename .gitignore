@@ -1,6 +1,7 @@
 \#*
 .\#*
 *~
+*.beam
 /.psci*
 /bower_components/
 /node_modules/

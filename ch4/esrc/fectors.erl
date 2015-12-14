@@ -12,6 +12,8 @@ go(N) ->
   recurs(N,[],N,fACS(N)).
 
 fACS(1)-> [];
+fACS(2)-> [2];
+fACS(3)-> [3];
 fACS(N)-> [N|[F || F <- lists:seq(2,N div 2), (N rem F) =:= 0]].
 
 recurs(M,Stem,_,[]) ->
