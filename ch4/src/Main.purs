@@ -4,6 +4,7 @@ import Prelude
 import Data.Array (null,filter,length)
 import Data.Array ((..))
 import Data.Array.Unsafe (head, tail)
+import Data.Foldable
 import Control.MonadPlus (guard)
 
 -- 4.4:1
@@ -80,26 +81,54 @@ factorize i =
 recurs :: Int -> Int -> Array Int -> Array Int -> Array (Array Int)
 recurs m n stem factors =
   if (null factors) then
-    if (prod stem 1) == m then [stem]
+    if (prod stem 1) == m then
+      [stem]
     else []
   else
-    dorecurs (head factors) (tail factors) m n stem
-
-dorecurs :: Int -> Array Int -> Int -> Int -> Array Int -> Array (Array Int)
-dorecurs f fs m n stem =
-  (recurs m (div n f) ([f] ++ stem) (facs (div n f))) ++ (recurs m n stem fs)
+    let f = (head factors)
+        fs = (tail factors)
+        n' = (div n f)
+        stem' = ([f] ++ stem)
+    in (recurs m n' stem' (facs n')) ++ (recurs m n stem fs)
+  where
+    prod [] p = p
+    prod is p = prod (tail is) ((head is) * p)
 
 facs :: Int -> Array Int
 facs n =
   if (n < 2) then []
   else
     if (n < 4) then [n]
-    else [n] ++
+    else
          do f <- 2 .. (div n 2)
             guard $ (mod n f) == 0
             return f
+         ++ [n]
 
-prod :: (Array Int) -> Int -> Int
-prod is p =
-  if (null is) then p
-  else prod (tail is) ((head is) * p)
+-- 4.15:1
+
+alltruep :: Array Boolean -> Boolean
+alltruep bs =
+  foldl (&&) true bs
+
+-- 4.15:2
+
+oddnumberoffalsep :: Array Boolean -> Boolean
+oddnumberoffalsep ps =
+  foldl (==) false ps
+
+-- 4.15:3
+
+count :: forall a. (a -> Boolean) -> Array a -> Int
+count p a = count' p a 0
+            where
+              count' _ [] n = n
+              count' p xs n =
+                if p (head xs)
+                then count' p (tail xs) (n + 1)
+                else count' p (tail xs) n
+
+-- 4.15:4
+
+reverse :: forall a. Array a -> Array a
+reverse = foldl (\xs x -> [x] ++ xs) []
